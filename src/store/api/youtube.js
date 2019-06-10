@@ -38,4 +38,40 @@ function fetchVideos(store, action){
     }
 }
 
-export {fetchVideos};
+function fetchOneVideo(store, action){
+    let url = `https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${action.videoId}&key=${MYTUBE_CONFIG.YOUTUBE_API_KEY}`;
+
+    fetch(url)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            store.dispatch({
+                type: "VIDEO_DATA_LOADED",
+                videoData: data.items[0]
+            });
+        })
+        .catch(function(err){
+            console.log("fetch error ==> ", err);
+        })
+}
+
+function fetchVideoComments(store, action){
+    let url = `https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId=${action.videoId}&key=${MYTUBE_CONFIG.YOUTUBE_API_KEY}`;
+
+    fetch(url)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            store.dispatch({
+                type: "VIDEO_COMMENTS_LOADED",
+                comments: data.items
+            });
+        })
+        .catch(function(err){
+            console.log("fetch error ==> ", err);
+        })
+}
+
+export {fetchVideos, fetchOneVideo, fetchVideoComments};

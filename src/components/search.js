@@ -17,7 +17,7 @@ class SearchComponent extends React.Component{
         this.buttonClicked = this.buttonClicked.bind(this);
     }
 
-    componentDidMount(){
+    componentWillUnmount(){
         this.props.dispatch({
             type: "CLEAR_VIDEOS"
         })
@@ -40,13 +40,13 @@ class SearchComponent extends React.Component{
     render(){
         return(
             <div>
-                <h2>Search Videos</h2>
+                <h2 className="text-danger">Search Videos</h2>
                 <hr />
                 <div className="form-row">
                     <div className="col">
                         <input onChange={this.inputChanged} type="text" className="form-control form-control-lg" />
                     </div>
-                    <button onClick={this.buttonClicked} className="btn btn-info btn-lg">Search</button>
+                    <button onClick={this.buttonClicked} className="btn btn-info btn-lg"><span className="oi oi-magnifying-glass"></span></button>
                 </div>    
                 <p></p>
                 <Videos />

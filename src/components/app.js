@@ -8,6 +8,7 @@ import Menu from './menu.js';
 import Videos from './videos.js';
 import Trending from './trending.js';
 import Search from './search.js';
+import VideoPlayer from './VideoPlayer.js';
 
 
 class App extends React.Component{
@@ -24,6 +25,7 @@ class App extends React.Component{
 
                                 <Route path='/' exact={true} component={Trending} />
                                 <Route path='/search' component={Search} />
+                                <Route path='/player/:videoId' component={VideoPlayer} />
                             </div>
                             
                         </div>
