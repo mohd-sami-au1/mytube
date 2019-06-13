@@ -2,8 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {stateMapper} from '../store/store.js';
-import { throwStatement } from '@babel/types';
-
 
 class CommentsComponent extends React.Component{
 
