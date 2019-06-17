@@ -1,7 +1,10 @@
-import React, { useReducer } from 'react';
-import { thisExpression, throwStatement } from '@babel/types';
+import React from 'react';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-class CreatePlaylist extends React.Component{
+import {stateMapper} from '../store/store.js';
+
+class CreatePlaylistComponent extends React.Component{
 
     constructor(props){
         super(props);
@@ -56,14 +59,26 @@ class CreatePlaylist extends React.Component{
     handleSubmit(event){
         event.preventDefault();
 
-        if(this.validateForm()){
-            console.log("For AJAX");
-        } else {
-            console.log("Form is invalid");
-        }
+        if(!this.validateForm()){ return; }
+
+            this.props.dispatch({
+                type: "CREATE_PLAYLIST",
+                formData: this.state
+            });
+    }
+
+    componentWillUnmount(){
+        this.props.dispatch({
+            type: "CLEAR_PLAYLIST_CREATED"
+        });
     }
 
     render(){
+
+        if(this.props.newPlaylist.id){
+            return <Redirect to={`/app/playlist/${this.props.newPlaylist.id}`} />
+        }
+
         return(
             <div>
 
@@ -129,5 +144,7 @@ class CreatePlaylist extends React.Component{
         )
     }
 }
+
+let CreatePlaylist = connect(stateMapper)(CreatePlaylistComponent);
 
 export default CreatePlaylist;
